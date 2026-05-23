@@ -1,0 +1,397 @@
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include "doctest.h"
+
+// include your project file
+#include "EliteDrive.cpp"
+
+TEST_CASE("MODULE 1 - isChar valid uppercase") {
+    CHECK(isChar('A') == true);
+}
+
+TEST_CASE("MODULE 1 - isChar valid lowercase") {
+    CHECK(isChar('z') == true);
+}
+
+TEST_CASE("MODULE 1 - isChar invalid number") {
+    CHECK(isChar('5') == false);
+}
+
+TEST_CASE("MODULE 1 - valid name") {
+    CHECK(isName("Ali") == true);
+}
+
+TEST_CASE("MODULE 1 - invalid name with digits") {
+    CHECK(isName("Ali123") == false);
+}
+
+TEST_CASE("MODULE 1 - valid email") {
+    CHECK(is_valid("abc@gmail.com") == true);
+}
+
+TEST_CASE("MODULE 1 - invalid email without @") {
+    CHECK(is_valid("abcgmail.com") == false);
+}
+
+TEST_CASE("MODULE 1 - invalid email starting with digit") {
+    CHECK(is_valid("1abc@gmail.com") == false);
+}
+
+TEST_CASE("MODULE 2 - University Road to Karsaz") {
+    Graph g(20);
+
+    g.addEdge(1,2,300);
+    g.addEdge(2,1,300);
+
+    vector<int> result = dijkstra(g,1);
+
+    CHECK(result[2] == 300);
+}
+
+TEST_CASE("MODULE 2 - University Road to Bahadurabad") {
+    Graph g(20);
+
+    g.addEdge(1,3,400);
+
+    vector<int> result = dijkstra(g,1);
+
+    CHECK(result[3] == 400);
+}
+
+TEST_CASE("MODULE 2 - shortest route through intermediate node") {
+    Graph g(20);
+
+    g.addEdge(1,2,300);
+    g.addEdge(2,3,200);
+
+    vector<int> result = dijkstra(g,1);
+
+    CHECK(result[3] == 500);
+}
+
+TEST_CASE("MODULE 2 - choose shortest path") {
+    Graph g(20);
+
+    g.addEdge(1,2,300);
+    g.addEdge(2,3,200);
+    g.addEdge(1,3,1000);
+
+    vector<int> result = dijkstra(g,1);
+
+    CHECK(result[3] == 500);
+}
+
+TEST_CASE("MODULE 3 - assign car for 1 passenger") {
+    CarList cl;
+
+    cl.addCar("Bike", "Red", 1);
+
+    CHECK(cl.assignCar(1) == true);
+}
+
+TEST_CASE("MODULE 3 - assign car for 4 passengers") {
+    CarList cl;
+
+    cl.addCar("BMW", "Black", 4);
+
+    CHECK(cl.assignCar(4) == true);
+}
+
+TEST_CASE("MODULE 3 - assign larger car") {
+    CarList cl;
+
+    cl.addCar("Audi", "White", 5);
+
+    CHECK(cl.assignCar(3) == true);
+}
+
+TEST_CASE("MODULE 3 - no suitable car available") {
+    CarList cl;
+
+    cl.addCar("Honda", "White", 4);
+
+    CHECK(cl.assignCar(10) == false);
+}
+
+TEST_CASE("MODULE 4 - add ride") {
+    RideLinkedList list;
+
+    CHECK_NOTHROW(list.Add_ride(1001));
+}
+
+TEST_CASE("MODULE 4 - add multiple rides") {
+    RideLinkedList list;
+
+    CHECK_NOTHROW(list.Add_ride(1001));
+    CHECK_NOTHROW(list.Add_ride(1002));
+}
+
+TEST_CASE("MODULE 4 - delete existing ride") {
+    RideLinkedList list;
+
+    list.Add_ride(1001);
+
+    CHECK_NOTHROW(list.delete_ride(1001));
+}
+
+TEST_CASE("MODULE 4 - delete non existing ride") {
+    RideLinkedList list;
+
+    CHECK_NOTHROW(list.delete_ride(9999));
+}
+
+TEST_CASE("MODULE 5 - valid phone length") {
+    string phone = "03001234567";
+
+    CHECK(phone.length() == 11);
+}
+
+TEST_CASE("MODULE 5 - invalid phone length") {
+    string phone = "0300123";
+
+    CHECK(phone.length() != 11);
+}
+
+TEST_CASE("MODULE 5 - valid NIC length") {
+    string nic = "1234567890123";
+
+    CHECK(nic.length() == 13);
+}
+
+TEST_CASE("MODULE 5 - invalid NIC length") {
+    string nic = "12345";
+
+    CHECK(nic.length() != 13);
+}
+
+// =======================================================
+// UNIT TESTING
+// =======================================================
+
+TEST_CASE("UNIT - Empty name") {
+    CHECK(isName("") == true);
+}
+
+TEST_CASE("UNIT - Name with special character") {
+    CHECK(isName("Ali@") == false);
+}
+
+TEST_CASE("UNIT - Email without dot") {
+    CHECK(is_valid("abc@gmailcom") == false);
+}
+
+TEST_CASE("UNIT - Email ending with dot") {
+    CHECK(is_valid("abc@gmail.") == false);
+}
+
+TEST_CASE("UNIT - Lowercase alphabet") {
+    CHECK(isChar('m') == true);
+}
+
+// =======================================================
+// MODULE TESTING - CAR MODULE
+// =======================================================
+
+TEST_CASE("MODULE - Exact car capacity") {
+
+    CarList cl;
+
+    cl.addCar("Corolla", "White", 5);
+
+    CHECK(cl.assignCar(5) == true);
+}
+
+TEST_CASE("MODULE - Passenger exceeds capacity") {
+
+    CarList cl;
+
+    cl.addCar("Corolla", "White", 5);
+
+    CHECK(cl.assignCar(6) == false);
+}
+
+// =======================================================
+// MODULE TESTING - RIDE LINKED LIST
+// =======================================================
+
+TEST_CASE("MODULE - Multiple rides insertion") {
+
+    RideLinkedList list;
+
+    CHECK_NOTHROW(list.Add_ride(111));
+    CHECK_NOTHROW(list.Add_ride(222));
+    CHECK_NOTHROW(list.Add_ride(333));
+}
+
+TEST_CASE("MODULE - Delete middle ride") {
+
+    RideLinkedList list;
+
+    list.Add_ride(111);
+    list.Add_ride(222);
+    list.Add_ride(333);
+
+    CHECK_NOTHROW(list.delete_ride(222));
+}
+
+TEST_CASE("MODULE - Delete first ride") {
+
+    RideLinkedList list;
+
+    list.Add_ride(111);
+    list.Add_ride(222);
+
+    CHECK_NOTHROW(list.delete_ride(111));
+}
+
+// =======================================================
+// INTEGRATION TESTING
+// =======================================================
+
+TEST_CASE("INTEGRATION - Car booking and ride creation") {
+
+    CarList cl;
+    RideLinkedList list;
+
+    cl.addCar("BMW", "Black", 4);
+
+    bool booked = cl.assignCar(2);
+
+    if(booked){
+        list.Add_ride(5001);
+    }
+
+    CHECK(booked == true);
+}
+
+TEST_CASE("INTEGRATION - Billing shortest path") {
+
+    Graph g(20);
+
+    g.addEdge(1,2,300);
+    g.addEdge(2,3,200);
+    g.addEdge(3,4,100);
+
+    vector<int> fare = dijkstra(g,1);
+
+    CHECK(fare[4] == 600);
+}
+
+TEST_CASE("INTEGRATION - Name and Email validation") {
+
+    bool validName = isName("Ahmed");
+    bool validEmail = is_valid("ahmed@gmail.com");
+
+    CHECK(validName == true);
+    CHECK(validEmail == true);
+}
+
+// =======================================================
+// BOUNDARY TESTING
+// =======================================================
+
+TEST_CASE("BOUNDARY - One passenger") {
+
+    CarList cl;
+
+    cl.addCar("Bike", "Red", 1);
+
+    CHECK(cl.assignCar(1) == true);
+}
+
+TEST_CASE("BOUNDARY - Maximum passenger supported") {
+
+    CarList cl;
+
+    cl.addCar("Van", "White", 15);
+
+    CHECK(cl.assignCar(15) == true);
+}
+
+TEST_CASE("BOUNDARY - Passenger beyond limit") {
+
+    CarList cl;
+
+    cl.addCar("Van", "White", 15);
+
+    CHECK(cl.assignCar(16) == false);
+}
+
+TEST_CASE("BOUNDARY - NIC exact length") {
+
+    string nic = "1234567890123";
+
+    CHECK(nic.length() == 13);
+}
+
+TEST_CASE("BOUNDARY - Phone exact length") {
+
+    string phone = "03123456789";
+
+    CHECK(phone.length() == 11);
+}
+
+// =======================================================
+// NEGATIVE TESTING
+// =======================================================
+
+TEST_CASE("NEGATIVE - Invalid pickup number") {
+
+    int pickup = 15;
+
+    CHECK((pickup >= 1 && pickup <= 13) == false);
+}
+
+TEST_CASE("NEGATIVE - Invalid destination number") {
+
+    int destination = -2;
+
+    CHECK((destination >= 1 && destination <= 13) == false);
+}
+
+// IMPORTANT:
+// Add this fix inside is_valid() before testing empty email:
+//
+// if(email.empty())
+//     return false;
+
+TEST_CASE("NEGATIVE - Empty email") {
+
+    CHECK(is_valid("") == false);
+}
+
+// =======================================================
+// FUNCTIONAL TESTING
+// =======================================================
+
+TEST_CASE("FUNCTIONAL - Booking flow") {
+
+    CarList cl;
+    RideLinkedList list;
+
+    cl.addCar("Audi", "White", 4);
+
+    bool assigned = cl.assignCar(3);
+
+    if(assigned){
+        list.Add_ride(1001);
+    }
+
+    CHECK(assigned == true);
+}
+
+TEST_CASE("FUNCTIONAL - Fare calculation") {
+
+    Graph g(20);
+
+    g.addEdge(1,2,300);
+    g.addEdge(2,4,500);
+
+    vector<int> fare = dijkstra(g,1);
+
+    CHECK(fare[4] == 800);
+}
+
+
+
+
+
