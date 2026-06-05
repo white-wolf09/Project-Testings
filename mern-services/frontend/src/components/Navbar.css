@@ -1,0 +1,167 @@
+/* ==========================================================================
+   QUICKSERVE EXACT MATCH NAVBAR CSS (FIXED ACTIVE BOX ISSUE)
+   ========================================================================= */
+
+/* Navbar Main Container */
+.navbar {
+  background-color: #0d1527; /* Dark elegant navy blue color */
+  padding: 14px 45px;
+  border-top-left-radius: 35px; /* Smooth corner round design */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+}
+
+.nav-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Brand/Logo Area Setup */
+.nav-brand-wrapper {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-logo-icon {
+  color: #f59e0b; /* Bright Yellow Bolt Icon */
+  font-size: 20px;
+}
+
+.nav-logo-text {
+  color: #ffffff;
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.nav-subtitle {
+  color: #64748b; 
+  font-size: 10px;
+  font-weight: 500;
+  margin-top: -1px;
+  letter-spacing: 0.2px;
+  text-align: left;
+}
+
+/* Links Container */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px; 
+}
+
+/* Sabhi Links ki Simple Styling */
+.nav-link {
+  color: #94a3b8 !important; /* Muted dim gray text */
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 0 !important; /* Agar pehle se koi padding thi to khatam ho jaye */
+  background: transparent !important; /* Kisi bhi kism ka background box khatam karne ke liye */
+  border: none !important;
+  border-radius: 0 !important;
+  transition: color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Services ke sath chota arrow down face karne ke liye */
+.arrow-down {
+  font-size: 10px;
+  transform: rotate(180deg);
+  display: inline-block;
+  margin-left: 2px;
+}
+
+/* Hover aur Active States FIX: Isse background white box nahi aayega, sirf text light white hoga */
+.nav-link:hover,
+.nav-link-active {
+  color: #e2e8f0 !important; /* Active text ka color (light white) */
+  background: transparent !important; /* Box hatane ke liye fully transparent */
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* User Login State Styling */
+.nav-user-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.nav-user-name {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.nav-logout-btn {
+  background: transparent !important;
+  border: none !important;
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.nav-logout-btn:hover {
+  color: #ef4444; 
+}
+
+/* Mobile Hamburger Button */
+.nav-hamburger {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+/* Responsive View (Mobile / Tablet) */
+@media (max-width: 992px) {
+  .navbar {
+    padding: 15px 20px;
+    border-top-left-radius: 0px; 
+  }
+
+  .nav-hamburger {
+    display: block;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 260px;
+    height: 100vh;
+    background-color: #0d1527;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 80px 30px;
+    gap: 25px;
+    transition: right 0.3s ease;
+    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.5);
+  }
+
+  .nav-links.nav-open {
+    right: 0;
+  }
+}
