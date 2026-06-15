@@ -1,0 +1,7 @@
+npm init playwright@latest
+npx playwright test --ui
+npx playwright codegen http://localhost:5173/register
+
+
+
+npx cypress open
