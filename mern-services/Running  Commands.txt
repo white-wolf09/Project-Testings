@@ -1,7 +1,13 @@
 npm init playwright@latest
-npx playwright test --ui
-npx playwright codegen http://localhost:5173/register
+
+npx playwright test --ui   ***Run Command
+
+npx playwright codegen http://localhost:5173/register *** Auto cases  
+
+npx allure open allure-report-playwright **** Test Report Playwright
 
 
+npx cypress open *** run Command
 
-npx cypress open
+
+ npx allure open allure-report       ***  Test Report  Cypress Commands
